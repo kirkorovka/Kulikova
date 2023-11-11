@@ -105,15 +105,16 @@ void PictureH(HDC hdc) {
 
 }
 
+
 void PictureVH(HDC hdc) {
-    int x, y,i, j;
+    int x, y, i, j;
 
     y = 50;
     i = 0;
     do {
+        x = 100;
+        j = 0;
         do {
-            x = 100;
-            j = 0;
             Image0(hdc, x, y, RGB(255, 255, 0));
             x += 50;
             j++;
@@ -121,7 +122,6 @@ void PictureVH(HDC hdc) {
         y += 70;
         i++;
     } while (i < 6);
-
 }
 
 
