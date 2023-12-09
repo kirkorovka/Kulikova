@@ -1,9 +1,8 @@
-// NormLab14.1.cpp : Определяет точку входа для приложения.
+// lab14.cpp : Определяет точку входа для приложения.
 //
 
 #include "framework.h"
-#include "NormLab14.1.h"
-
+#include "lab14.h"
 #include "Images.h"
 
 #define MAX_LOADSTRING 100
@@ -31,7 +30,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Инициализация глобальных строк
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_NORMLAB141, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_LAB14, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // Выполнить инициализацию приложения:
@@ -40,9 +39,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_NORMLAB141));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LAB14));
 
     MSG msg;
+    
 
     // Цикл основного сообщения:
     while (GetMessage(&msg, nullptr, 0, 0))
@@ -57,11 +57,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
-
 int image1_x = 100;
 int image1_y = 100;
 int type = 0;
-
 
 //
 //  ФУНКЦИЯ: MyRegisterClass()
@@ -79,10 +77,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_NORMLAB141));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LAB14));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_NORMLAB141);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_LAB14);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -148,40 +146,77 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-
     case WM_KEYDOWN:
         switch (wParam)
         {
-        case VK_LEFT: // стрелка ВЛЕВО
+        case VK_LEFT: //Стрелка ВЛЕВО
             image1_x -= 10;
             InvalidateRect(hWnd, NULL, TRUE);
             break;
-        case VK_RIGHT: // стрелка ВПРАВО
+        case VK_RIGHT: //Стрелка ВПРАВО
             image1_x += 10;
             InvalidateRect(hWnd, NULL, TRUE);
             break;
-        case VK_DOWN: // стрелка ВНИЗ
+        case VK_DOWN: //Стрелка ВНИЗ
             image1_y += 10;
             InvalidateRect(hWnd, NULL, TRUE);
             break;
-        case VK_UP: // стрелка ВВЕРХ
+        case VK_UP: //Стрелка ВВЕРХ
             image1_y -= 10;
+            InvalidateRect(hWnd, NULL, TRUE);
+            break;
+
+        case VK_SPACE: //ПРОБЕЛ
+            type++;
+            if (type > 4) type = 0;
             InvalidateRect(hWnd, NULL, TRUE);
             break;
 
         }
         break;
+    case WM_LBUTTONDOWN:
+    {
+        WORD xPos, yPos;
+
+        // Сохраняем координаты курсора мыши
+        xPos = LOWORD(lParam);
+        yPos = HIWORD(lParam);
 
 
+        image1_x = xPos;
+        image1_y = yPos;
+        InvalidateRect(hWnd, NULL, TRUE);
+    }
+    break;
+
+    
+   
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Добавьте сюда любой код прорисовки, использующий HDC...
 
-            //Rectangle(hdc, image1_x - 10, image1_y -10,image1_x+10, image1_y+10 );
 
-            Image2(hdc, image1_x, image1_y, RGB(0,0,255));
+            if (type==0) Image0(hdc, image1_x, image1_y, RGB(0, 0, 255));
+            if (type == 1) Image1(hdc, image1_x, image1_y, RGB(0, 0, 255));
+            if (type == 2) Image2(hdc, image1_x, image1_y, RGB(0, 0, 255));
+            if (type == 3) Image3(hdc, image1_x, image1_y, RGB(0, 0, 255));
+            if (type == 4) Image4(hdc, image1_x, image1_y, RGB(0, 0, 255));
+
+           // Image3(hdc, image1_x, image1_y, RGB(0, 0, 255));
+
+           // Rectangle(hdc, image1_x - 10, image1_y - 10, image1_x + 10, image1_y + 10);
+
+
+
+
+
+
+
+
+
+
 
 
 
