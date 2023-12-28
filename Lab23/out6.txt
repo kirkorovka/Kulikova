@@ -1,0 +1,23 @@
+int;; in = s
+ 2 
+int count = 0
+ 0 
+int index = 0;
+ 1 
+79
+ 0 
+if (isalphr57a(s[i])) {
+ 0 
+	5;768;;
+ 3 
+	45
+ 0 
+gd
+ 0 
+			
+ 0 
+45;7356
+ 1 
+s
+ 0 
+				 0 

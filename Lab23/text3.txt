@@ -1,0 +1,8 @@
+3458(6)
+define _CRT_SECURE_NO_WARNINGS
+7865
+include <stdio.h>d45
+include <Windows.h>
+includ34e <ctype.h>
+56include <string.h>
+45

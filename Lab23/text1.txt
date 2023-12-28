@@ -1,0 +1,7 @@
+oid main() {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+
+	FILE* fin = fopen("D:\\Stadies\\Project1\\text1.txt", "rt");
+	if (fin == NULL) {
