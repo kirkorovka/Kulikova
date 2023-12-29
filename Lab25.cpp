@@ -1,9 +1,8 @@
-// Lab25.cpp : Определяет точку входа для приложения.
+// LAAAAAAB25.cpp : Определяет точку входа для приложения.
 //
 
 #include "framework.h"
-#include "Lab25.h"
-
+#include "LAAAAAAB25.h"
 
 #define MAX_LOADSTRING 100
 
@@ -30,7 +29,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Инициализация глобальных строк
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_LAB25, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_LAAAAAAB25, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // Выполнить инициализацию приложения:
@@ -39,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LAB25));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LAAAAAAB25));
 
     MSG msg;
 
@@ -56,7 +55,152 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
+void Triangle(HDC hdc, int cx, int cy, int size) {
+    HPEN hPen;
+    hPen = CreatePen(PS_SOLID, 2, RGB(0, 255, 0));
+    SelectObject(hdc, hPen);
 
+    MoveToEx(hdc, cx, cy + size, NULL);
+    LineTo(hdc, cx + size, cy - size);
+    LineTo(hdc, cx - size, cy - size);
+    LineTo(hdc, cx, cy + size);
+
+    DeleteObject(hPen);
+}
+
+void RecursiveTriangle(HDC hdc, int cx, int cy, int size) {
+    Triangle(hdc, cx, cy, size);
+    if (size < 20) {
+        return;
+    }
+    //RecursiveTriangle(hdc, cx, cy - size, size / 2); //up
+    //RecursiveTriangle(hdc, cx - size, cy + size / 5, size / 2); //leftDown
+    RecursiveTriangle(hdc, cx - size, cy - size, size / 2); //leftUp
+    RecursiveTriangle(hdc, cx + size, cy - size, size / 2); //rightUp
+    //RecursiveTriangle(hdc, cx + size, cy + size / 5, size / 2); //rightDowm
+    RecursiveTriangle(hdc, cx, cy + size, size / 2); //down
+
+}
+
+void Hourglass(HDC hdc, int cx, int cy, int size) {
+    int x1 = cx - size / 2;
+    int y1 = cy - size;
+    int x2 = cx + size / 2;
+    int y2 = cy - size;
+    int x3 = cx - size;
+    int y3 = cy + size;
+    int x4 = cx + size;
+    int y4 = cy + size;
+    HPEN hPen;
+    hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
+    SelectObject(hdc, hPen);
+    MoveToEx(hdc, x1, y1, NULL);
+    LineTo(hdc, x2, y2);
+    LineTo(hdc, x3, y3);
+    LineTo(hdc, x4, y4);
+    LineTo(hdc, x1, y1);
+
+    DeleteObject(hPen);
+}
+void RecursiveHourglass(HDC hdc, int cx, int cy, int size) {
+    Hourglass(hdc, cx, cy, size);
+    if (size < 20) {
+        return;
+    }
+    //RecursiveHourglass(hdc, cx - size, cy, size / 2);
+    //RecursiveHourglass(hdc, cx + size, cy, size / 2);
+    //RecursiveHourglass(hdc, cx + size/2 , cy - size, size / 2);
+    //RecursiveHourglass(hdc, cx - size / 2, cy - size, size / 2);
+    RecursiveHourglass(hdc, cx + size, cy + size, size / 2);
+    RecursiveHourglass(hdc, cx - size, cy + size, size / 2);
+    RecursiveHourglass(hdc, cx - size / 2, cy - size, size / 2);
+    RecursiveHourglass(hdc, cx + size / 2, cy - size, size / 2);
+}
+
+void Rhombus(HDC hdc, int cx, int cy, int size) {
+    int x1 = cx;
+    int y1 = cy - size;
+    int x2 = cx + size;
+    int y2 = cy;
+    int x3 = cx;
+    int y3 = cy + size;
+    int x4 = cx - size;
+    int y4 = cy;
+    HPEN hPen;
+    hPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+    SelectObject(hdc, hPen);
+    MoveToEx(hdc, x1, y1, NULL);
+    LineTo(hdc, x2, y2);
+    LineTo(hdc, x3, y3);
+    LineTo(hdc, x4, y4);
+    LineTo(hdc, x1, y1);
+
+    DeleteObject(hPen);
+}
+
+void RecursiveRhombus(HDC hdc, int cx, int cy, int size) {
+    Rhombus(hdc, cx, cy, size);
+    if (size < 20) {
+        return;
+    }
+    RecursiveRhombus(hdc, cx + size, cy, size / 2); //right
+    //RecursiveRhombus(hdc, cx - size, cy, size / 2); //left
+    RecursiveRhombus(hdc, cx, cy + size, size / 2); //down
+    //RecursiveRhombus(hdc, cx, cy - size, size / 2); //up
+
+    //RecursiveRhombus(hdc, cx + size, cy - size, size / 2); //rightUp
+    //RecursiveRhombus(hdc, cx - size, cy - size, size / 2); //leftUp
+
+
+}
+void Star(HDC hdc, int cx, int cy, int size) {
+    int x1 = cx;
+    int y1 = cy - size;
+    int x2 = cx + size / 4;
+    int y2 = cy - size / 4;
+    int x3 = cx + size;
+    int y3 = cy;
+    int x4 = cx + size / 4;
+    int y4 = cy + size / 4;
+    int x5 = cx;
+    int y5 = cy + size;
+    int x6 = cx - size / 4;
+    int y6 = cy + size / 4;
+    int x7 = cx - size;
+    int y7 = cy;
+    int x8 = cx - size / 4;
+    int y8 = cy - size / 4;
+    HPEN hPen;
+    hPen = CreatePen(PS_SOLID, 2, RGB(200, 200, 0));
+    SelectObject(hdc, hPen);
+    MoveToEx(hdc, x1, y1, NULL);
+    LineTo(hdc, x2, y2);
+    LineTo(hdc, x3, y3);
+    LineTo(hdc, x4, y4);
+    LineTo(hdc, x5, y5);
+    LineTo(hdc, x6, y6);
+    LineTo(hdc, x7, y7);
+    LineTo(hdc, x8, y8);
+    LineTo(hdc, x1, y1);
+
+    DeleteObject(hPen);
+}
+void RecursiveStar(HDC hdc, int cx, int cy, int size) {
+    Star(hdc, cx, cy, size);
+    if (size < 20) {
+        return;
+    }
+    RecursiveStar(hdc, cx, cy, size/2 ); //starInstar
+    //RecursiveStar(hdc, cx + size, cy, size / 2); //right
+    //RecursiveStar(hdc, cx - size, cy, size / 2); //left
+    //RecursiveStar(hdc, cx, cy - size, size / 2); //up
+    //RecursiveStar(hdc, cx, cy + size, size / 2); //down
+    //RecursiveStar(hdc, cx + size, cy - size, size / 2); //rightUp
+    //RecursiveStar(hdc, cx - size, cy - size, size / 2); //lefttUp
+    RecursiveStar(hdc, cx + size, cy + size, size / 2); //lefttDown
+    RecursiveStar(hdc, cx - size, cy + size, size / 2); //rightDown
+
+}
 
 //
 //  ФУНКЦИЯ: MyRegisterClass()
@@ -74,10 +218,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LAB25));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LAAAAAAB25));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_LAB25);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_LAAAAAAB25);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -111,29 +255,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    return TRUE;
 }
-
-void Triangle(HDC hdc, int cx, int cy, int size) {
-    HPEN hPen;
-    hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
-    MoveToEx(hdc, cx, cy + size, NULL);
-    LineTo(hdc, cx + size, cy - size);
-    LineTo(hdc, cx - size, cy - size);
-    LineTo(hdc, cx, cy + size);
-
-    DeleteObject(hPen);
-}
-
-void RecursiveTriangle(HDC hdc, int cx, int cy, int size) {
-    Triangle(hdc, cx, cy, size);
-    if (size < 20) {
-        return;
-    }
-    RecursiveTriangle(hdc, cx, cy - size, size / 2);
-    RecursiveTriangle(hdc, cx - size, cy + size / 5, size / 2);
-    RecursiveTriangle(hdc, cx + size, cy + size / 5, size / 2);
-    //RecursiveTriangle(hdc, cx , cy + size, size / 2);
-}
-
 
 //
 //  ФУНКЦИЯ: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -172,10 +293,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Добавьте сюда любой код прорисовки, использующий HDC...
 
+            //RecursiveTriangle(hdc, 200, 160, 80);
 
-            RecursiveTriangle(hdc, 200, 160, 80);
+            //RecursiveHourglass(hdc, 200, 160, 80);
+            //RecursiveRhombus(hdc, 200, 160, 80);
 
-
+            RecursiveStar(hdc, 200, 160, 80);
             EndPaint(hWnd, &ps);
         }
         break;
