@@ -13,4 +13,3 @@ void QuickSortStrings();
 //int BinarySearchStrings(char* value);
 int isSortedStrings();
 
-extern int n;
